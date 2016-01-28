@@ -15,8 +15,8 @@ The code repo has started with a basic stub and unit test.
 Complete the implementation and unit tests for the following functions. Use a TDD style approach to help you develop and test out your functions (10 points each -- including unit tests):
 
 * `public Status leastRetweeted(List<Status> list)`
-* `public String mostRetweetedPhoto(List<Status> list)` Return url of most retweeted photo in a single tweet. Use [MediaEntity.getMediaURL()](http://twitter4j.org/oldjavadocs/4.0.4/index.html). That is, for all tweets that contain a photo, which one has the highest retweet count?
-* `public String mostTweetedPhoto(List<Status> list)` Return url of most tweeted photo across *all* tweets. For example, 2 different pictures of octocat is shared by many people across many tweets. Which photo was most posted, including retweets counts?
+* `public String mostRetweetedPhoto(List<Status> list)` Return url of most retweeted photo in a single tweet. Use [MediaEntity.getMediaURL()](http://twitter4j.org/oldjavadocs/4.0.4/index.html). *That is, for all tweets that contain a photo, which one has the highest retweet count?*
+* `public String mostTweetedPhoto(List<Status> list)` Return url of most tweeted photo across *all* tweets. *For example, 2 different pictures of octocat is shared by many people across many tweets. Which photo was most posted, including retweets counts?*
 * `public int mostCommonWord(List<Status> list)` Return the most frequent occurrence of a word in a across *all* statuses.
 
 ##### Twitter
