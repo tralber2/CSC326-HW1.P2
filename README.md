@@ -15,9 +15,14 @@ The code repo has started with a basic stub and unit test.
 Complete the implementation and unit tests for the following functions. Use a TDD style approach to help you develop and test out your functions (10 points each -- including unit tests):
 
 * `public Status leastRetweeted(List<Status> list)`
-* `public String mostRetweetedPhoto(List<Status> list)` Return url of most retweeted photo. Use [http://twitter4j.org/oldjavadocs/4.0.4/index.html](MediaEntity.getMediaURL()) 
+* `public String mostRetweetedPhoto(List<Status> list)` Return url of most retweeted photo. Use [MediaEntity.getMediaURL()](http://twitter4j.org/oldjavadocs/4.0.4/index.html)
 * `public String mostTweetedPhoto(List<Status> list)` Return url of most tweeted photo across *all* tweets.
 * `public int mostCommonWord(List<Status> list)` Return the most frequent occurrence of a word in a across *all* statuses.
+
+##### Twitter
+
+![image](https://cloud.githubusercontent.com/assets/742934/12633172/372f32f0-c53d-11e5-97cd-58a0fd359384.png)
+![image](https://cloud.githubusercontent.com/assets/742934/12633202/779fac7a-c53d-11e5-90c4-5699525767ce.png)
 
 ## Part 2 - Selenium (40 points)
 
