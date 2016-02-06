@@ -30,6 +30,11 @@ public class WebTest {
 		ChromeDriverManager.getInstance().setup();
 		driver = new ChromeDriver();
 	}
+	/**
+	 * Tests that the participation count for the Frustration of Software Developers
+	 * is 55.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void participationCount() throws InterruptedException {
 			this.driver.get("http://checkbox.io/studies.html");
