@@ -19,83 +19,122 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 
-public class WebTest
-{
+public class WebTest {
 	private static WebDriver driver;
 
-    @BeforeClass
-    public static void setUp() throws Exception 
-    {
-        //driver = new HtmlUnitDriver(true);
-        //System.setProperty("webdriver.chrome.driver", "/Users/gameweld/classes/326/HW1.P2/hw1p2/chromedriver");
-        ChromeDriverManager.getInstance().setup();
-        driver = new ChromeDriver();
-    }
-	
-    
-	@Test
-	public void googleExists() throws Exception
-	{
-		this.driver.get("http://www.google.com");
-        assertEquals("Google", this.driver.getTitle());		
+	@BeforeClass
+	public static void setUp() throws Exception {
+		// driver = new HtmlUnitDriver(true);
+		// System.setProperty("webdriver.chrome.driver",
+		// "/Users/gameweld/classes/326/HW1.P2/hw1p2/chromedriver");
+		ChromeDriverManager.getInstance().setup();
+		driver = new ChromeDriver();
 	}
-	
 	@Test
-	public void googleiTrustNumberOne() throws Exception
-	{
+	public void participationCount() throws InterruptedException {
+			this.driver.get("http://checkbox.io/studies.html");
+			Thread.sleep(1000);
+			String voteCount = null;
+
+			List<WebElement> rowList = this.driver.findElements(By.xpath("//div[@class='row']"));
+
+			for (WebElement rowElement : rowList) {
+				List<WebElement> spanList = rowElement
+						.findElements(By.xpath("div[@class='span8']/h3/span[@data-bind='text: name']"));
+				for (WebElement spanElement : spanList) {
+					if (spanElement.getText().equals("Frustration of Software Developers")) {
+						WebElement voteElement = rowElement.findElement(By.xpath("div[@class='span4']/p/span[@data-bind='text: votes']"));
+						voteCount = voteElement.getText();
+					}
+				}
+			}
+			assertTrue(voteCount.equals("55"));
+	}
+	@Test
+	public void googleExists() throws Exception {
 		this.driver.get("http://www.google.com");
-		//this.driver.
+		Thread.sleep(1000);
+		assertEquals("Google", this.driver.getTitle());
+	}
+
+	@Test
+	public void googleiTrustNumberOne() throws Exception {
+		this.driver.get("http://www.google.com");
+		Thread.sleep(1000);
+		// this.driver.
 		WebElement search = this.driver.findElement(By.name("q"));
 		search.sendKeys("ncsu iTrust");
 		search.sendKeys(Keys.RETURN);
-		//this.driver.findElement(By.name("btnK")).click();
-		
+		// this.driver.findElement(By.name("btnK")).click();
+
 		WebDriverWait wait = new WebDriverWait(this.driver, 30);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("resultStats")));
 
 		List<WebElement> links = this.driver.findElements(By.xpath("//a[@data-href]"));
 		int rank = 0;
-		for( WebElement link : links )
-		{
-			if( link.getAttribute("data-href").equals("http://agile.csc.ncsu.edu/iTrust/wiki/"))
-			{
-				break;  
-			}  
-			
+		for (WebElement link : links) {
+			if (link.getAttribute("data-href").equals("http://agile.csc.ncsu.edu/iTrust/wiki/")) {
+				break;
+			}
+
 			rank++;
 		}
-		
+
 		assertEquals(0, rank);
 	}
+
+	
+
 	@Test
-	public void participationCount() {
+	public void totalClosedStudies() throws InterruptedException {
+
+		int numClosedStudies = 0;
 		this.driver.get("http://checkbox.io/studies.html");
-		WebElement search = this.driver.findElement(By.xpath("//span[@class='backers']))
+		Thread.sleep(1000);
+		List<WebElement> statusList = this.driver.findElements(By.xpath("//a[@class='status']"));
+		for (WebElement statusElement : statusList) {
+			if (statusElement.getText().equals("STATUS: CLOSED")) {
+				numClosedStudies++;
+			}
+		}
+		assertEquals(numClosedStudies, 5);
 	}
-	
+
 	@Test
-	public void totalClosedStudies() {
-		
+	public void canParticipateInOpenStudy() throws InterruptedException {
+		int numClosedStudies = 0;
+		this.driver.get("http://checkbox.io/studies.html");
+		Thread.sleep(1000);
+		List<WebElement> statusList = this.driver.findElements(By.xpath("//a[@class='status']"));
+		for (WebElement statusElement : statusList) {
+			WebElement participateButton = null;
+			if (statusElement.getText().equals("STATUS: OPEN")) {
+				Boolean canParticipate = true;
+				try {
+					participateButton = statusElement.findElement(By.xpath("//button"));
+					WebDriverWait wait = new WebDriverWait(this.driver, 5);
+					wait.until(ExpectedConditions.elementToBeClickable(participateButton));
+				} catch (Exception e) {
+					canParticipate = false;
+				}
+				assertTrue(canParticipate);
+			}
+		}
 	}
-	
+
 	@Test
-	public void canParticipateInOpenStudy() {
-		
+	public void canEnterTextInStudy() throws InterruptedException {
+		this.driver.get("http://checkbox.io/studies/?id=569e667f12101f8a12000001");
+		Thread.sleep(1000);
+		WebElement textBox = this.driver.findElement(By.xpath("//textArea"));
+		assertTrue(textBox.getAttribute("value").equals(""));
+		textBox.sendKeys("success");
+		assertTrue(textBox.getAttribute("value").equals("success"));
+
 	}
-	
-	@Test
-	public void canEnterTextInStudy() {
-//		try {
-//		this.driver.get("http://checkbox.io/studies/?id=569e667f12101f8a12000001");
-//		WebElement search = this.driver.findElement(By.name("q"));
-//		search.sendKeys("ncsu iTrust");
-//		}catch (Exception e) {
-//			System.out.println(e.getMessage());
-//		}
-	}
+
 	@AfterClass
-    public static void  tearDown() throws Exception
-    {
-        driver.close();
-    }
+	public static void tearDown() throws Exception {
+		driver.close();
+	}
 }
