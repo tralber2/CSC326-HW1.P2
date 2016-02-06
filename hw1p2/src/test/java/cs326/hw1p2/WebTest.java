@@ -1,5 +1,9 @@
 package cs326.hw1p2;
-
+/**
+ * Selenium test cases for HW1.P2
+ * 
+ * @author Tyler Albert
+ */
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -55,13 +59,21 @@ public class WebTest {
 			}
 			assertTrue(voteCount.equals("55"));
 	}
+	/**
+	 * Tests whether or not Google exists.
+	 * @throws Exception
+	 */
 	@Test
 	public void googleExists() throws Exception {
 		this.driver.get("http://www.google.com");
 		Thread.sleep(1000);
 		assertEquals("Google", this.driver.getTitle());
 	}
-
+	/**
+	 * Tests that iTrust is the number one link
+	 * when searching NCSU iTrust
+	 * @throws Exception
+	 */
 	@Test
 	public void googleiTrustNumberOne() throws Exception {
 		this.driver.get("http://www.google.com");
@@ -89,7 +101,10 @@ public class WebTest {
 	}
 
 	
-
+	/**
+	 * Tests that the total number of closed studies is 5.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void totalClosedStudies() throws InterruptedException {
 
@@ -104,7 +119,10 @@ public class WebTest {
 		}
 		assertEquals(numClosedStudies, 5);
 	}
-
+	/**
+	 * Tests that surveys that can be participated in have a clickable button.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void canParticipateInOpenStudy() throws InterruptedException {
 		int numClosedStudies = 0;
@@ -126,7 +144,10 @@ public class WebTest {
 			}
 		}
 	}
-
+	/**
+	 * Tests that on a survey, text can be entered.
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void canEnterTextInStudy() throws InterruptedException {
 		this.driver.get("http://checkbox.io/studies/?id=569e667f12101f8a12000001");
